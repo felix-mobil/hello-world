@@ -1,5 +1,43 @@
+
+
 # hello-world
 my first github
+<br>
+<br>
+<br>
+
+# Markdown
+
+__Header__  
+## Header2
+### Header3
+Text
+
+__Styles__   
+_italic_ __bold__ *italic* **bold**
+
+__Listen__
+1. Item 1
+1. Item 2
+
+* Item 1
+    * Item 2
+
+__Text mit Rand__
+>Text mit Rand
+
+__Code__  
+`<addInline coder>`
+
+__Tabellen__
+Spalte 1 |
+- | -
+test |
+test2 |
+
+LineBreak  
+-> with two Spaces
+
 
 TODO
 - nach Resets suchen ("Normalize")
@@ -8,9 +46,13 @@ TODO
 - für eigene Attribute verwenden!
 
 am Ende der HTML, weil Laden von JS blockierend wirkt 
--> html soll erst mal dargestellt werden, bevor js dargestellt wird
-<script src="node_modules/jquery/dist/jquery.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+-> html soll erst mal dargestellt werden, bevor js dargestellt wird 
+
+`<script src="node_modules/jquery/dist/jquery.js"></script>`<br>
+`<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>`
+
+
+
 
 2er irgendwass installieren
 npm install jquery@2
