@@ -12,5 +12,18 @@ LESS
 Installation LESS-Kompiler
 
 Vcode
-	Easy Less
-	Live Server
+	- Easy Less
+	- Live Server
+
+
+
+
+
+
+    <Content Include="www\css\styles.css" />
+    <Content Include="www\css\styles.min.css">
+
+weg
+  <ItemGroup>
+    <Folder Include="www\css\" />
+  </ItemGroup>
