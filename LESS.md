@@ -24,6 +24,6 @@ Vcode
     <Content Include="www\css\styles.min.css">
 
 weg
-  <ItemGroup>
-    <Folder Include="www\css\" />
-  </ItemGroup>
+  ItemGroup
+    Folder Include="www\css\" 
+  ItemGroup
