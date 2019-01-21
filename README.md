@@ -96,19 +96,6 @@ Doc
 	getbootstrap.com
 	jQuery nur für BS-Components notwendig
 
-LESS
-- Komentare möglich
-	//
-- Klassenhierarchie
-- Parent-Name
-	&
-
-Installation LESS-Kompiler
-
-Vcode
-	Easy Less
-	Live Server
-
 SMACSS
 Reset
 - Vereinheitlichung der Browser 
