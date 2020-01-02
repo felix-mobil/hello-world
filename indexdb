@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="./jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function () {
+            createDatabase();
+
+            $("#readID").click(function () {
+                read();
+            });
+            $("#clearID").click(function () {
+                clear();
+            });
+            $("#dropDatabaseID").click(function () {
+                dropDatabase();
+            });
+        });
+
+
+        var db;
+        const DB_STORE_NAME = "customers";
+        const DB_NAME = "MeineTestdatenbank";
+
+        function createDatabase() {
+
+            //
+            // https://developer.mozilla.org/de/docs/IndexedDB/IndexedDB_verwenden
+            //
+
+
+            if (!window.indexedDB) {
+                window.alert("Ihr Browser unterstützt keine stabile Version von IndexedDB. Dieses und jenes Feature wird Ihnen nicht zur Verfügung stehen.");
+            }
+            else {
+                console.log("window.indexedDB is not null!");
+            }
+
+            // Öffnen unserer Datenbank
+            var request = indexedDB.open(DB_NAME);
+
+
+            request.onsuccess = function (event) {
+                // wird erste nach onupgradeneeded aufgerufen
+                console.log("open onsuccess event");
+                db = request.result;
+
+                // DB-Error-Handler
+                db.onerror = function (event) {
+                    console.log("db onerror event");
+                    // Allgemeine Fehlerbehandlung, die für alle Anfragen an die Datenbank gilt. 
+                    alert("Datenbankfehler: " + event.target.errorCode);
+                };
+
+            };
+
+            request.onupgradeneeded = function (event) {
+                console.log("open onupgradeneeded event");
+                // wird ggf. innerhalb vom open(..) aufgerufen
+                onUpgradeNeededIntern(event);
+            };
+
+            request.onerror = function (event) {
+                console.log("open onerror event");
+                // z.B. wenn Version die geöffnet werden soll kleiner ist als die lokal im Browser gespeicherte
+            };
+
+
+        }
+
+        function onUpgradeNeededIntern(event) {
+
+            const customerData = [
+                { ssn: "444-44-4444", name: "Bill", age: 35, email: "bill@company.com" },
+                { ssn: "555-55-5555", name: "Donna", age: 32, email: "donna@home.org" }
+            ];
+
+            var db = event.target.result;
+
+            var objectStore = db.createObjectStore(DB_STORE_NAME, { keyPath: "ssn" });
+
+            objectStore.createIndex("name", "name", { unique: false });
+
+            // Create an index to search customers by email. We want to ensure that no two customers have the same email, so use a unique index.
+            objectStore.createIndex("email", "email", { unique: true });
+
+            // Store values in the newly created objectStore.
+            for (var i in customerData) {
+                objectStore.add(customerData[i]);
+            }
+        }
+
+        function read() {
+            console.log("read ...");
+            var transaction = db.transaction([DB_STORE_NAME]);
+            var objectStore = transaction.objectStore(DB_STORE_NAME);
+            var request = objectStore.get("444-44-4444");
+            request.onerror = function (event) {
+                console.log("read onerror!");
+            };
+            request.onsuccess = function (event) {
+                // Do something with the request.result!
+                console.log("read onsuccess!");
+                alert("read Name for SSN 444-44-4444 is " + request.result.name);
+            };
+        }
+
+        function clear() {
+            console.log("clear ...");
+            var store = getObjectStore(DB_STORE_NAME, 'readwrite');
+            var req = store.clear();
+            req.onsuccess = function (evt) {
+                console.log("clear onsuccess!");
+            };
+            req.onerror = function (evt) {
+                console.log("clear onerror!");
+            };
+        }
+
+        function dropDatabase() {
+            console.log("dropDatabase ...");
+
+            db.close();
+
+            //IDBFactory
+            var DBDeleteRequest = window.indexedDB.deleteDatabase(DB_NAME);
+            DBDeleteRequest.onerror = function (event) {
+                console.log("Error deleting database.");
+            };
+            DBDeleteRequest.onsuccess = function (event) {
+                console.log("Database deleted successfully");
+            };
+        }
+
+        /**
+           * @param {string} store_name
+           * @param {string} mode either "readonly" or "readwrite"
+           */
+        function getObjectStore(store_name, mode) {
+            var tx = db.transaction(store_name, mode);
+            return tx.objectStore(store_name);
+        }
+
+    </script>
+</head>
+<body>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+    </style>
+
+    <div>indexedDB</div>
+    <div id="readID">read()</div>
+    <div id="clearID">clearData()</div>
+    <div id="dropDatabaseID">dropDatabase()</div>
+
+</body>
+</html>
