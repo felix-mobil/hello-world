@@ -1,4 +1,4 @@
-#Typescript
+// Typescript
 
 class List<T> {
     private dict: { [id: string]: T; } = {}
