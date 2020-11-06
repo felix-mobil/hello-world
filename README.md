@@ -32,15 +32,21 @@ __Text mit Rand__
 __Code__  
 `<addInline coder>`
 
+
 __Tabellen__
-Spalte 1 |
-- | -
-test |
-test2 |
+| Spalte 1 | Saplte2 | 
+| - | - |
+| test | test2 |
+
+
+LineBreak1
+without Space
 
 LineBreak  
--> with two Spaces
+with two Spaces
 
+LineBreak 
+with one Spaces
 
 TODO
 - nach Resets suchen ("Normalize")
